@@ -17,10 +17,10 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps = async (ctx) => {
-	const category = await client.fetch(`*[_type=='category'&& slug.current=='${ctx.params.slug}'][0]{title,slug{current}}`);
+	const category = await client.fetch(`*[_type=='category'&& slug.current=='${ctx.params.slug}'][0]{title,slug{current},displayName}`);
 	const portfolioItems = await client.fetch(`
 		*[count((category[]->slug.current)[@ in ["${ctx.params.slug}"]]) > 0]{
-			_id, title, slug, category[]->{_id, title, slug}
+			_id, title, slug, category[]->{_id, title, slug, displayName}
 		}
 	`)
 	return {props: {
@@ -32,7 +32,7 @@ export const getStaticProps = async (ctx) => {
 const Category = (props) => {
 	const {
 		category: {
-			title
+			title, displayName
 		},
 		portfolioItems
 	} = props;
@@ -40,7 +40,7 @@ const Category = (props) => {
 		<div className={'bg-black text-gray-200 min-h-screen py-8'}>
 			<div className="container mx-auto px-4 mb-8">
 				<Link href={'/'}>home</Link>
-				<h1 className={'mb-4 normal-case'}>{title}</h1>
+				<h1 className={'py-24 mb-4 normal-case'}><span className={'text-gray-500'}>Category: </span>{displayName ?? title}</h1>
 				{portfolioItems.map(item => {
 					const {_id: id, title, slug: { current: slug }, category: categories} = item;
 					return (

@@ -1,5 +1,6 @@
 import {client} from "@/lib/data";
 import Link from "next/link";
+import TaxTag from "@/components/TaxTag";
 
 export const getStaticPaths = async () => {
 	const portfolioSlugs = await client.fetch(`*[_type=='portfolioItem']{slug{current}}`);
@@ -16,7 +17,7 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps = async (ctx) => {
-	const item = await client.fetch(`*[_type=='portfolioItem' && slug.current=='${ctx.params.slug}'][0]{title, category[]->{_id, title, slug}, content}`)
+	const item = await client.fetch(`*[_type=='portfolioItem' && slug.current=='${ctx.params.slug}'][0]{title, category[]->{_id, title, slug, displayName}, content}`)
 	return {props: {item}}
 }
 
@@ -30,11 +31,10 @@ const PortfolioItem = (props) => {
 		<div className={'bg-black text-gray-200 min-h-screen py-8'}>
 			<div className="container mx-auto px-4 mb-8">
 				<Link href={'/'}>home</Link>
-				<h1 className={'mb-4'}>{title}</h1>
+				<h1 className={'mb-4'}><span className={'text-gray-500'}>Project: </span>{title}</h1>
 				<div className={'flex gap-2'}>
-					{categories.map(category => {
-						return <Link key={category._id} href={`/category/${category.slug.current}`}
-												 className={'bg-gray-800 text-gray-300 px-2 rounded'}>{category.title}</Link>
+					{categories?.map(category => {
+						return <TaxTag key={category._id} target={`/category/${category.slug.current}`} label={category.displayName ?? category.title} />
 					})}
 				</div>
 				<p>
