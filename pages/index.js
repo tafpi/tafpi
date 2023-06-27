@@ -47,8 +47,9 @@ export default function Home(props) {
 						<h2 className={'mb-2'}>
 							Contact
 						</h2>
-						<div className="ml-6">
-							<a href="mailto:tilpoth@gmail.com">tilpoth@gmail.com</a>
+						<div className="ml-6 flex gap-4">
+							<a href="mailto:tilpoth@gmail.com">email</a>
+							<a href="https://www.linkedin.com/in/tilemachos-pothitos-45800426a">linkedin</a>
 						</div>
 					</div>
 				</section>
@@ -58,7 +59,7 @@ export default function Home(props) {
 }
 
 export async function getStaticProps() {
-	const portfolioItems = await client.fetch(`*[_type=='portfolioItem']{_id, title, slug, description, category[]->{_id, title, slug}}`);
+	const portfolioItems = await client.fetch(`*[_type=='portfolioItem']{_id, title, slug, description, category[]->{_id, title, slug, displayName}}`);
 	return {
 		props: {
 			portfolioItems
