@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 @layer base {
+    .basic-layout{
+        @apply bg-gray-100 text-gray-800 min-h-screen py-8;
+    }
+
     a {
         &:hover {
             @apply underline;

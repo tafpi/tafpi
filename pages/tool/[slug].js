@@ -3,11 +3,11 @@ import Link from "next/link";
 import PortfolioItem from "@/components/PortfolioItem";
 
 export const getStaticPaths = async () => {
-	const categories = await client.fetch(`*[_type=='category']{slug{current}}`);
-	const paths = categories.map(category => {
+	const tools = await client.fetch(`*[_type=='tool']{slug{current}}`);
+	const paths = tools.map(tool => {
 		return {
 			params: {
-				slug: category?.slug.current
+				slug: tool?.slug.current
 			}
 		}
 	})
@@ -17,21 +17,23 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps = async (ctx) => {
-	const category = await client.fetch(`*[_type=='category'&& slug.current=='${ctx.params.slug}'][0]{title,slug{current},displayName}`);
+	const tools = await client.fetch(`*[_type=='tool'&& slug.current=='${ctx.params.slug}'][0]{title,slug{current},displayName}`);
 	const portfolioItems = await client.fetch(`
-		*[count((category[]->slug.current)[@ in ["${ctx.params.slug}"]]) > 0]{
+		*[count((tools[]->slug.current)[@ in ["${ctx.params.slug}"]]) > 0]{
 			_id, title, slug, description, category[]->{_id, title, slug, displayName}, tools[]->{_id, title, slug, displayName}
 		}
 	`)
-	return {props: {
-		category,
-		portfolioItems
-	}}
+	return {
+		props: {
+			tools,
+			portfolioItems
+		}
+	}
 }
 
-const Category = (props) => {
+const Tool = (props) => {
 	const {
-		category: {
+		tools: {
 			title, displayName
 		},
 		portfolioItems
@@ -40,7 +42,8 @@ const Category = (props) => {
 		<div className={'basic-layout'}>
 			<div className="container mx-auto px-4 mb-8">
 				<Link href={'/'}>home</Link>
-				<h1 className={'py-24 mb-4 normal-case'}><span className={'text-gray-500'}>Category: </span>{displayName ?? title}</h1>
+				<h1 className={'py-24 mb-4 normal-case'}><span className={'text-gray-500'}>Tool: </span>{displayName ?? title}
+				</h1>
 				<div className="ml-6 grid gap-8">
 					{portfolioItems.map(item => {
 						const {_id: id, title, slug: {current: slug}, description, category: categories, tools} = item;
@@ -54,4 +57,4 @@ const Category = (props) => {
 	);
 };
 
-export default Category;
+export default Tool;
