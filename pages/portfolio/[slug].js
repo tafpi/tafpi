@@ -1,34 +1,14 @@
 import {client} from "@/lib/data";
 import Link from "next/link";
 import TaxTag from "@/components/TaxTag";
-// import React from "@types/react";
 import Image from "next/image";
 
-export const getStaticPaths = async () => {
-	const portfolioSlugs = await client.fetch(`*[_type=='portfolioItem' && !(_id in path("drafts.**"))]{slug{current}}`);
-	const paths = portfolioSlugs.map(portfolioSlug => {
-		return {
-			params: {
-				slug: portfolioSlug?.slug.current
-			}
-		}
-	})
-	return {
-		paths, fallback: true, // false or "blocking"
-	}
-}
 
-export const getStaticProps = async (ctx) => {
-	const item = await client.fetch(`*[_type=='portfolioItem' && !(_id in path("drafts.**")) && slug.current=='${ctx.params.slug}'][0]{_id, title, slug, content, 'featuredImage': featuredImage.asset->url, url, category[]->{_id, title, slug, displayName}, tools[]->{_id, title, slug, displayName}}`)
-	return {props: {item}}
-}
-
-const PortfolioItem = (props) => {
+const PortfolioItem = ({item}) => {
+	if (!item) return null;
 	const {
-		item: {
-			title, content, featuredImage: imageSrc, url: externalLink, category: categories, tools
-		}
-	} = props;
+		title, content, featuredImage: imageSrc, url: externalLink, category: categories, tools
+	} = item;
 	return (
 		<div className={'basic-layout'}>
 			<div className="container mx-auto px-4 mb-8">
@@ -70,7 +50,8 @@ const PortfolioItem = (props) => {
 					{externalLink && (
 						<div>
 							link to project: <a href={externalLink} target={'_blank'}
-																	referrerPolicy={'no-referrer'} className={'underline hover:no-underline'}>{externalLink}</a>
+																	referrerPolicy={'no-referrer'}
+																	className={'underline hover:no-underline'}>{externalLink}</a>
 						</div>
 					)}
 					{imageSrc && <Image src={imageSrc} width={'900'} height={'400'} alt={''}/>}
@@ -79,5 +60,24 @@ const PortfolioItem = (props) => {
 		</div>
 	);
 };
+
+export const getStaticPaths = async () => {
+	const portfolioSlugs = await client.fetch(`*[_type=='portfolioItem' && !(_id in path("drafts.**"))]{slug{current}}`);
+	const paths = portfolioSlugs.map(portfolioSlug => {
+		return {
+			params: {
+				slug: portfolioSlug?.slug.current
+			}
+		}
+	})
+	return {
+		paths, fallback: true, // false or "blocking"
+	}
+}
+
+export const getStaticProps = async (ctx) => {
+	const item = await client.fetch(`*[_type=='portfolioItem' && !(_id in path("drafts.**")) && slug.current=='${ctx.params.slug}'][0]{_id, title, slug, content, 'featuredImage': featuredImage.asset->url, url, category[]->{_id, title, slug, displayName}, tools[]->{_id, title, slug, displayName}}`)
+	return {props: {item}}
+}
 
 export default PortfolioItem;
