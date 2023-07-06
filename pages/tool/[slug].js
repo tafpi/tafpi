@@ -17,7 +17,7 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps = async (ctx) => {
-	const tools = await client.fetch(`*[_type=='tool'&& slug.current=='${ctx.params.slug}'][0]{title,slug{current},displayName}`);
+	const tool = await client.fetch(`*[_type=='tool'&& slug.current=='${ctx.params.slug}'][0]{title,slug{current},displayName}`);
 	const portfolioItems = await client.fetch(`
 		*[count((tools[]->slug.current)[@ in ["${ctx.params.slug}"]]) > 0]{
 			_id, title, slug, description, category[]->{_id, title, slug, displayName}, tools[]->{_id, title, slug, displayName}
@@ -25,19 +25,15 @@ export const getStaticProps = async (ctx) => {
 	`)
 	return {
 		props: {
-			tools,
+			tool,
 			portfolioItems
 		}
 	}
 }
 
-const Tool = (props) => {
-	const {
-		tools: {
-			title, displayName
-		},
-		portfolioItems
-	} = props;
+const Tool = ({tool, portfolioItems}) => {
+	if (!tool || !portfolioItems) return null;
+	const {title, displayName} = tool;
 	return (
 		<div className={'basic-layout'}>
 			<div className="container mx-auto px-4 mb-8">

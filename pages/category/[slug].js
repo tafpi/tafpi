@@ -23,29 +23,29 @@ export const getStaticProps = async (ctx) => {
 			_id, title, slug, description, category[]->{_id, title, slug, displayName}, tools[]->{_id, title, slug, displayName}
 		}
 	`)
-	return {props: {
-		category,
-		portfolioItems
-	}}
+	return {
+		props: {
+			category,
+			portfolioItems
+		}
+	}
 }
 
-const Category = (props) => {
-	const {
-		category: {
-			title, displayName
-		},
-		portfolioItems
-	} = props;
+const Category = ({category, portfolioItems}) => {
+	if (!category || !portfolioItems) return null;
+	const {title, displayName} = portfolioItems;
 	return (
 		<div className={'basic-layout'}>
 			<div className="container mx-auto px-4 mb-8">
 				<Link href={'/'}>home</Link>
-				<h1 className={'py-24 mb-4 normal-case'}><span className={'text-gray-500'}>Category: </span>{displayName ?? title}</h1>
+				<h1 className={'py-24 mb-4 normal-case'}><span
+					className={'text-gray-500'}>Category: </span>{displayName ?? title}</h1>
 				<div className="ml-6 grid gap-8">
 					{portfolioItems.map(item => {
 						const {_id: id, title, slug: {current: slug}, description, category: categories, tools} = item;
 						return (
-							<PortfolioItem key={id} title={title} slug={slug} description={description} categories={categories} tools={tools}/>
+							<PortfolioItem key={id} title={title} slug={slug} description={description} categories={categories}
+														 tools={tools}/>
 						)
 					})}
 				</div>

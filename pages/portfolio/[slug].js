@@ -23,12 +23,11 @@ export const getStaticProps = async (ctx) => {
 	return {props: {item}}
 }
 
-const PortfolioItem = (props) => {
+const PortfolioItem = ({item}) => {
+	if (!item) return null;
 	const {
-		item: {
-			title, content, featuredImage: imageSrc, url: externalLink, category: categories, tools
-		}
-	} = props;
+		title, content, featuredImage: imageSrc, url: externalLink, category: categories, tools
+	} = item;
 	return (
 		<div className={'basic-layout'}>
 			<div className="container mx-auto px-4 mb-8">
