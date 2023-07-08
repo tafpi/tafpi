@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import {client} from "@/lib/data";
 import PortfolioItem from "@/components/PortfolioItem";
-// import styles from '@/styles/Home.module.css'
+import Layout from "@/components/Layout";
 
 export default function Home(props) {
 	const {portfolioItems} = props;
@@ -13,9 +13,9 @@ export default function Home(props) {
 				<meta name="viewport" content="width=device-width, initial-scale=1"/>
 				{/*<link rel="icon" href="/favicon.ico"/>*/}
 			</Head>
-			<main className={'basic-layout'}>
-				<section className={'container mx-auto px-4 mb-8'}>
-					<div className="flex flex-col py-12 justify-center min-h-[25vh]">
+			<Layout>
+				<section className={'container max-w-screen-lg mx-auto p-8 md:p-12 lg:p-16 px-4'}>
+					<div className="flex flex-col justify-center">
 						<div className="flex-shrink inline-flex flex-col w-fit mb-6">
 							<h1 className={'flex-shrink mr-12 text-5xl md:text-6xl'}>Tilemachos Pothitos</h1>
 							<h2 className={'ml-6 sm:ml-auto text-xl'}>Front-End Developer</h2>
@@ -59,7 +59,7 @@ export default function Home(props) {
 						</div>
 					</div>
 				</section>
-			</main>
+			</Layout>
 		</>
 	)
 }

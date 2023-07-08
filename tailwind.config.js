@@ -7,6 +7,11 @@ module.exports = {
 		"./components/*.js"
 	],
 	theme: {
+		fontFamily: {
+			mono: [
+				"'Noto Sans Mono', monospace",
+			],
+		},
 		extend: {},
 	},
 	plugins: [],
