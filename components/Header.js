@@ -9,10 +9,10 @@ const Header = () => {
 	return (
 		isHome ? <></> :
 		<div className={'fixed w-full bg-white/90'}>
-			<div className={'container max-w-screen-lg mx-auto px-4 py-1'}>
-				<div className="flex justify-between">
-					<Link href={'/'} className={'font-mono text-lg leading-none w-min hover:bg-teal-200 hover:no-underline'}>Tilemachos Pothitos</Link>
-					<Link href={'/'}>Home</Link>
+			<div className={'container max-w-screen-lg mx-auto px-4 pl-0'}>
+				<div className="flex justify-between items-center">
+					<Link href={'/'} className={'font-mono text-lg leading-none px-4 py-1 w-min hover:bg-teal-200 hover:no-underline'}>Tilemachos Pothitos</Link>
+					<Link href={'/'} className={'font-mono'}>Home</Link>
 				</div>
 			</div>
 		</div>

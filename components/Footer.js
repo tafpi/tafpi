@@ -2,9 +2,9 @@ import React, {useEffect, useState} from 'react';
 
 const Footer = () => {
 	const [copied, setCopied] = useState(false);
-	useEffect(()=>{
-		if(copied){
-			setTimeout(()=>{
+	useEffect(() => {
+		if (copied) {
+			setTimeout(() => {
 				setCopied(false);
 			}, 1500);
 		}
@@ -18,19 +18,18 @@ const Footer = () => {
 					</h2>
 					<div className="ml-6 flex flex-col items-start sm:flex-row gap-2 sm:gap-6">
 						<span>
-							tilpoth@gmail.com <a href="#" className={'underline hover:no-underline'} target={'_blank'}
-								 referrerPolicy={'no-referrer'} onClick={(e) => {
-								e.preventDefault();
+							tilpoth@gmail.com
+							<button className={'underline hover:no-underline'} title={'copy email address'} onClick={() => {
 								navigator.clipboard.writeText('tilpoth@gmail.com').then(
 									() => {
 										setCopied(true);
 										console.log('successfully copied "tilpoth@gmail.com" to your clipboard');
 									},
-									()=>{
+									() => {
 										console.log('error copying email to clipboard');
 									}
 								)
-							}}>{copied ? 'copied!' : 'copy'}</a>
+							}}>{copied ? 'copied!' : 'copy'}</button>
 						</span>
 						<a href="https://www.linkedin.com/in/tilemachos-pothitos-45800426a"
 							 className={'underline hover:no-underline'} target={'_blank'} referrerPolicy={'no-referrer'}>linkedin</a>
