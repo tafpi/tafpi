@@ -17,8 +17,11 @@ export default function Home(props) {
 				<section className={'container max-w-screen-lg mx-auto py-8 md:py-12 lg:py-16 px-4'}>
 					<div className="flex flex-col justify-center">
 						<div className="flex-shrink inline-flex flex-col w-fit mb-6">
-							<h1 className={'flex-shrink w-min sm:w-auto mr-12 mb-4 text-4xl md:text-5xl lg:text-6xl'}>Tilemachos Pothitos</h1>
-							<h2 className={'ml-12 mr-auto sm:ml-auto sm:mr-0 text-lg md:text-xl font-light border-b-4 border-teal-200'}>Front-End Developer</h2>
+							<h1 className={'flex-shrink w-min sm:w-auto mr-12 mb-4 text-4xl md:text-5xl lg:text-6xl'}>Tilemachos
+								Pothitos</h1>
+							<h2
+								className={'ml-12 mr-auto sm:ml-auto sm:mr-0 text-lg md:text-xl font-light border-b-4 border-teal-200'}>Front-End
+								Developer</h2>
 						</div>
 						<p className={'max-w-xl ml-6'}>
 							Studied product and systems design, working on front-end development.
@@ -31,18 +34,26 @@ export default function Home(props) {
 				</section>
 				<section className={'bg-gray-100 py-8 md:py-14'}>
 					<div className={'container max-w-screen-lg mx-auto px-4'}>
-						<div className="flex flex-col justify-center min-h-[25vh]">
+						<div className="flex flex-col justify-center">
 							<h2 className={'mb-8 md:mb-14'}>
 								Work
 							</h2>
 							<div className="grid gap-6 md:gap-12">
 								{portfolioItems.map(item => {
-									const {_id: id, title, slug: {current: slug}, description, featuredImage, url, category: categories, tools} = item;
+									const {
+										_id: id,
+										title,
+										slug: {current: slug},
+										description,
+										featuredImage,
+										url,
+										category: categories,
+										tools
+									} = item;
 									return (
-										<div key={id}>
-											<PortfolioItem slug={slug} title={title} description={description} imageSrc={featuredImage} externalLink={url} categories={categories}
-																		 tools={tools}/>
-										</div>
+										<PortfolioItem key={id} slug={slug} title={title} description={description} imageSrc={featuredImage}
+																	 externalLink={url} categories={categories}
+																	 tools={tools}/>
 									)
 								})}
 							</div>
@@ -55,7 +66,13 @@ export default function Home(props) {
 }
 
 export async function getStaticProps() {
-	const portfolioItems = await client.fetch(`*[_type=='portfolioItem' && !(_id in path("drafts.**"))]{_id, title, slug, description, 'featuredImage': featuredImage.asset->url, url, category[]->{_id, title, slug, displayName}, tools[]->{_id, title, slug, displayName}}`);
+	const portfolioItems = await client.fetch(`
+	*[_type=='portfolioItem' && !(_id in path("drafts.**"))]{
+		_id, title, slug, description, url,
+		'featuredImage': featuredImage.asset->url, 
+		category[]->{_id, title, slug, displayName}, 
+		tools[]->{_id, title, slug, displayName}}
+		`);
 	return {
 		props: {
 			portfolioItems
