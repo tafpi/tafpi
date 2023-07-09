@@ -14,48 +14,38 @@ export default function Home(props) {
 				{/*<link rel="icon" href="/favicon.ico"/>*/}
 			</Head>
 			<Layout>
-				<section className={'container max-w-screen-lg mx-auto p-8 md:p-12 lg:p-16 px-4'}>
+				<section className={'container max-w-screen-lg mx-auto py-8 md:py-12 lg:py-16 px-4'}>
 					<div className="flex flex-col justify-center">
 						<div className="flex-shrink inline-flex flex-col w-fit mb-6">
-							<h1 className={'flex-shrink mr-12 text-5xl md:text-6xl'}>Tilemachos Pothitos</h1>
-							<h2 className={'ml-6 sm:ml-auto text-xl'}>Front-End Developer</h2>
+							<h1 className={'flex-shrink w-min sm:w-auto mr-12 mb-4 text-4xl md:text-5xl lg:text-6xl'}>Tilemachos Pothitos</h1>
+							<h2 className={'ml-12 mr-auto sm:ml-auto sm:mr-0 text-lg md:text-xl font-light border-b-4 border-teal-200'}>Front-End Developer</h2>
 						</div>
 						<p className={'max-w-xl ml-6'}>
 							Studied product and systems design, working on front-end development.
 							<br/>
-							Scholastic and experience driven with an eye for functional details.
+							Experience driven and scholastic with an eye for functional details.
 							<br/>
 							Likes interactive stuff that make sense.
 						</p>
 					</div>
 				</section>
-				<section className={'container mx-auto px-4 mb-8'}>
-					<div className="flex flex-col py-12 justify-center min-h-[25vh]">
-						<h2 className={'mb-8'}>
-							Work
-						</h2>
-						<div className="ml-6 grid gap-8">
-							{portfolioItems.map(item => {
-								const {_id: id, title, slug: {current: slug}, description, featuredImage, url, category: categories, tools} = item;
-								return (
-									<div key={id}>
-										<PortfolioItem slug={slug} title={title} description={description} imageSrc={featuredImage} externalLink={url} categories={categories}
-																	 tools={tools}/>
-									</div>
-								)
-							})}
-						</div>
-					</div>
-				</section>
-				<section className={'container mx-auto px-4 mb-8'}>
-					<div className="flex flex-col py-12 justify-center min-h-[25vh]">
-						<h2 className={'mb-2'}>
-							Connect
-						</h2>
-						<div className="ml-6 flex gap-4">
-							<a href="mailto:tilpoth@gmail.com" target={'_blank'} referrerPolicy={'no-referrer'}>email</a>
-							<a href="https://www.linkedin.com/in/tilemachos-pothitos-45800426a" target={'_blank'} referrerPolicy={'no-referrer'}>linkedin</a>
-							<a href="https://itch.io/profile/tuff-pie" target={'_blank'} referrerPolicy={'no-referrer'}>itch</a>
+				<section className={'bg-gray-100 py-8 md:py-14'}>
+					<div className={'container max-w-screen-lg mx-auto px-4'}>
+						<div className="flex flex-col justify-center min-h-[25vh]">
+							<h2 className={'mb-8 md:mb-14'}>
+								Work
+							</h2>
+							<div className="grid gap-6 md:gap-12">
+								{portfolioItems.map(item => {
+									const {_id: id, title, slug: {current: slug}, description, featuredImage, url, category: categories, tools} = item;
+									return (
+										<div key={id}>
+											<PortfolioItem slug={slug} title={title} description={description} imageSrc={featuredImage} externalLink={url} categories={categories}
+																		 tools={tools}/>
+										</div>
+									)
+								})}
+							</div>
 						</div>
 					</div>
 				</section>
