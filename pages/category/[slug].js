@@ -1,6 +1,6 @@
 import {client} from "@/lib/data";
-import Link from "next/link";
-import PortfolioItem from "@/components/PortfolioItem";
+import Layout from "@/components/Layout";
+import Archive from "@/components/Archive";
 
 export const getStaticPaths = async () => {
 	const categories = await client.fetch(`*[_type=='category']{slug{current}}`);
@@ -17,40 +17,39 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps = async (ctx) => {
-	const category = await client.fetch(`*[_type=='category'&& slug.current=='${ctx.params.slug}'][0]{title,slug{current},displayName}`);
+	const category = await client.fetch(`*[_type=='category' && slug.current=='${ctx.params.slug}'][0]{title,slug{current},displayName}`);
+	const allCategories = await client.fetch(`*[_type=='category' && !(_id in path("drafts.**"))]{_id, title, slug, displayName}`);
 	const portfolioItems = await client.fetch(`
-		*[count((category[]->slug.current)[@ in ["${ctx.params.slug}"]]) > 0]{
-			_id, title, slug, description, category[]->{_id, title, slug, displayName}, tools[]->{_id, title, slug, displayName}
+		*[!(_id in path("drafts.**")) && count((category[]->slug.current)[@ in ["${ctx.params.slug}"]]) > 0]{
+			_id, title, slug, description, url,
+			'featuredImage': featuredImage.asset->url, 
+			category[]->{_id, title, slug, displayName}, 
+			tools[]->{_id, title, slug, displayName}
 		}
 	`)
 	return {
 		props: {
 			category,
+			allCategories,
 			portfolioItems
 		}
 	}
 }
 
-const Category = ({category, portfolioItems}) => {
+const Category = ({category, allCategories, portfolioItems}) => {
 	if (!category || !portfolioItems) return null;
-	const {title, displayName} = portfolioItems;
+	const {title, displayName} = category;
 	return (
-		<div className={'basic-layout'}>
-			<div className="container mx-auto px-4 mb-8">
-				<Link href={'/'}>home</Link>
-				<h1 className={'py-24 mb-4 normal-case'}><span
-					className={'text-gray-500'}>Category: </span>{displayName ?? title}</h1>
-				<div className="ml-6 grid gap-8">
-					{portfolioItems.map(item => {
-						const {_id: id, title, slug: {current: slug}, description, category: categories, tools} = item;
-						return (
-							<PortfolioItem key={id} title={title} slug={slug} description={description} categories={categories}
-														 tools={tools}/>
-						)
-					})}
-				</div>
-			</div>
-		</div>
+		<Layout>
+			<Archive
+				slug={category.slug.current}
+				type={'Category'}
+				allLabel={'all categories'}
+				title={displayName ?? title}
+				tags={allCategories}
+				items={portfolioItems}
+			/>
+		</Layout>
 	);
 };
 
