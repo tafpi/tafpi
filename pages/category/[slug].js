@@ -44,7 +44,7 @@ const Category = ({category, allCategories, portfolioItems}) => {
 			<Archive
 				slug={category.slug.current}
 				type={'Category'}
-				allLabel={'all categories'}
+				path={'category'}
 				title={displayName ?? title}
 				tags={allCategories}
 				items={portfolioItems}

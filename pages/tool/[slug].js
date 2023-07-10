@@ -45,7 +45,7 @@ const Tool = ({tool, allTools, portfolioItems}) => {
 			<Archive
 				slug={tool.slug.current}
 				type={'Tool'}
-				allLabel={'all tools'}
+				path={'tool'}
 				title={displayName ?? title}
 				tags={allTools}
 				items={portfolioItems}

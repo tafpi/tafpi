@@ -2,7 +2,7 @@ import React from 'react';
 import PortfolioItem from "@/components/PortfolioItem";
 import TaxTag from "@/components/TaxTag";
 
-const Archive = ({slug, type, allLabel, title, tags, items}) => {
+const Archive = ({slug, type, path, allLabel, title, tags, items}) => {
 	return (
 		<>
 			<div className={'bg-gray-300 border-b border-gray-400 py-4 lg:py-8'}>
@@ -17,12 +17,13 @@ const Archive = ({slug, type, allLabel, title, tags, items}) => {
 					</h1>
 					{tags && (
 						<div className={'flex flex-wrap gap-2 gap-y-1 items-center'}>
-							<span>{allLabel}: </span>
+							{allLabel && <span>{allLabel}: </span>}
 							{tags?.map(tag => {
 								if (tag !== null) {
 									const {_id: id, slug: {current: tagSlug}, displayName, title} = tag;
 									const isCurrent = tagSlug === slug;
-									return <TaxTag key={id} target={`/category/${tagSlug}`} label={displayName ?? title} extraClasses={`${isCurrent ? 'bg-teal-200' : ''}`}/>
+									return <TaxTag key={id} target={`/${path}/${tagSlug}`} label={displayName ?? title}
+																 extraClasses={`${isCurrent ? 'bg-teal-200' : ''}`}/>
 								}
 							})}
 						</div>
