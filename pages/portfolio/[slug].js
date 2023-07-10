@@ -68,7 +68,7 @@ const PortfolioItem = ({item}) => {
 						)}
 						{imageSrc && <Image src={imageSrc} width={'900'} height={'900'} className={'border'} alt={''}/>}
 						{images?.map(image => {
-							return <Image key={image.id} src={image.asset.url} width={'900'} height={'900'} className={'border'}
+							return <Image key={image.asset._id} src={image.asset.url} width={'900'} height={'900'} className={'border'}
 														alt={''}/>
 						})}
 					</div>
@@ -98,7 +98,7 @@ export const getStaticProps = async (ctx) => {
 		_id, title, slug, content, 
 		'thumbnailImage': thumbnailImage.asset->url, 
 		'featuredImage': featuredImage.asset->url,
-		images[]{asset->{url}},
+		images[]{asset->{_id, url}},
 		url, category[]->{_id, title, slug, displayName}, tools[]->{_id, title, slug, displayName}
 		}`)
 	return {props: {item}}
