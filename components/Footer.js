@@ -18,8 +18,7 @@ const Footer = () => {
 					</h2>
 					<div className="flex flex-col items-start sm:flex-row gap-2 sm:gap-4 font-mono">
 						<span>
-							tilpoth@gmail.com
-							{'>'} <button className={'underline hover:no-underline'} title={'copy email address'} onClick={() => {
+							tilpoth@gmail.com{' >'} <button className={'underline hover:no-underline'} title={'copy email address'} onClick={() => {
 								navigator.clipboard.writeText('tilpoth@gmail.com').then(
 									() => {
 										setCopied(true);
@@ -31,12 +30,17 @@ const Footer = () => {
 								)
 							}}>{copied ? 'copied!' : 'copy'}</button>
 						</span>
-						<span className={'hidden sm:inline-block'}>||</span>
-						<a href="https://www.linkedin.com/in/tilemachos-pothitos-45800426a"
-							 className={'underline hover:no-underline'} target={'_blank'} referrerPolicy={'no-referrer'}>linkedin</a>
-						<span className={'hidden sm:inline-block'}>||</span>
-						<a href="https://itch.io/profile/tuff-pie" className={'underline hover:no-underline'} target={'_blank'}
-							 referrerPolicy={'no-referrer'}>itch</a>
+						<div className="flex gap-2 sm:gap-4">
+							<span>||</span>
+							<a href="https://github.com/tafpi"
+								 className={'underline hover:no-underline'} target={'_blank'} referrerPolicy={'no-referrer'}>github</a>
+							<span>||</span>
+							<a href="https://www.linkedin.com/in/tilemachos-pothitos-45800426a"
+								 className={'underline hover:no-underline'} target={'_blank'} referrerPolicy={'no-referrer'}>linkedin</a>
+							<span>||</span>
+							<a href="https://itch.io/profile/tuff-pie" className={'underline hover:no-underline'} target={'_blank'}
+								 referrerPolicy={'no-referrer'}>itch</a>
+						</div>
 					</div>
 				</div>
 			</div>
