@@ -20,7 +20,7 @@ const Layout = ({children}) => {
 	}, [])
 	return (
 		<main className={''}>
-			<div className={'fixed z-50 w-full h-12 lg:h-16 hidden'} style={{display: `${isHome ? 'none' : 'block'}`}} ref={headerRef}><Header/></div>
+			<header className={'fixed z-50 w-full h-12 lg:h-16 hidden'} style={{display: `${isHome ? 'none' : 'block'}`}} ref={headerRef}><Header/></header>
 			<div className={`${isHome ? '' : 'pt-12 lg:pt-16'}`}>
 				{children}
 			</div>

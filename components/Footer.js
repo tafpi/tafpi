@@ -10,7 +10,7 @@ const Footer = () => {
 		}
 	}, [copied])
 	return (
-		<div className={'bg-teal-200 border-t border-teal-400'}>
+		<footer className={'bg-teal-200 border-t border-teal-400'}>
 			<div className={'container max-w-screen-lg mx-auto px-4'}>
 				<div className="flex flex-col justify-center py-8 pb-12">
 					<h2 className={'mb-2'}>
@@ -19,7 +19,6 @@ const Footer = () => {
 					<div className="flex flex-col items-start sm:flex-row gap-2 sm:gap-4 font-mono">
 						<span>
 							tilpoth@gmail.com
-							{/*<br className={'sm:hidden'}/>*/}
 							{'>'} <button className={'underline hover:no-underline'} title={'copy email address'} onClick={() => {
 								navigator.clipboard.writeText('tilpoth@gmail.com').then(
 									() => {
@@ -41,7 +40,7 @@ const Footer = () => {
 					</div>
 				</div>
 			</div>
-		</div>
+		</footer>
 	);
 };
 
