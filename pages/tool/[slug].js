@@ -45,7 +45,7 @@ const Tool = ({tool, allTools, portfolioItems}) => {
 	return (
 		<>
 			<Head>
-				<title>TP - {workingTitle} Tool</title>
+				<title>{workingTitle} Tool | TP</title>
 				<meta name="description"
 							content={`This is a page listing projects that use ${workingTitle}.`}/>
 				<meta name="viewport" content="width=device-width, initial-scale=1"/>

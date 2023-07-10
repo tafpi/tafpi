@@ -44,7 +44,7 @@ const Category = ({category, allCategories, portfolioItems}) => {
 	return (
 		<>
 			<Head>
-				<title>TP - {workingTitle} Category</title>
+				<title>{workingTitle} Category | TP</title>
 				<meta name="description" content={`This is a page listing projects within the ${workingTitle} category.`}/>
 				<meta name="viewport" content="width=device-width, initial-scale=1"/>
 				{/*<link rel="icon" href="/favicon.ico"/>*/}
