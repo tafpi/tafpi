@@ -20,7 +20,7 @@ export const getStaticProps = async (ctx) => {
 	const category = await client.fetch(`*[_type=='category' && slug.current=='${ctx.params.slug}'][0]{title,slug{current},displayName}`);
 	const allCategories = await client.fetch(`*[_type=='category' && !(_id in path("drafts.**"))]{_id, title, slug, displayName}`);
 	const portfolioItems = await client.fetch(`
-		*[!(_id in path("drafts.**")) && count((category[]->slug.current)[@ in ["${ctx.params.slug}"]]) > 0]{
+		*[!(_id in path("drafts.**")) && count((category[]->slug.current)[@ in ["${ctx.params.slug}"]]) > 0]|order(publishedDate desc){
 			_id, title, slug, description, url,
 			'featuredImage': featuredImage.asset->url, 
 			category[]->{_id, title, slug, displayName}, 

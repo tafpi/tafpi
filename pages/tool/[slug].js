@@ -18,9 +18,10 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (ctx) => {
 	const tool = await client.fetch(`*[_type=='tool' && slug.current=='${ctx.params.slug}'][0]{title,slug{current},displayName}`);
+	// @todo exclude stray tools
 	const allTools = await client.fetch(`*[_type=='tool' && !(_id in path("drafts.**"))]{_id, title, slug, displayName}`);
 	const portfolioItems = await client.fetch(`
-		*[!(_id in path("drafts.**")) && count((tools[]->slug.current)[@ in ["${ctx.params.slug}"]]) > 0]{
+		*[!(_id in path("drafts.**")) && count((tools[]->slug.current)[@ in ["${ctx.params.slug}"]]) > 0]|order(publishedDate desc){
 			_id, title, slug, description, url,
 			'featuredImage': featuredImage.asset->url, 
 			category[]->{_id, title, slug, displayName}, 

@@ -67,7 +67,7 @@ export default function Home(props) {
 
 export async function getStaticProps() {
 	const portfolioItems = await client.fetch(`
-	*[_type=='portfolioItem' && !(_id in path("drafts.**"))]{
+	*[_type=='portfolioItem' && !(_id in path("drafts.**"))]|order(publishedDate desc){
 		_id, title, slug, description, url,
 		'featuredImage': featuredImage.asset->url, 
 		category[]->{_id, title, slug, displayName}, 
