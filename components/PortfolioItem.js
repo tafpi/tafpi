@@ -25,7 +25,7 @@ const PortfolioItem = ({slug, title, description, imageSrc, externalLink, catego
 				<div className={'sm:order-3 sm:col-span-3 md:col-span-1 md:order-3 lg:col-span-3 flex flex-col gap-3'}>
 					{categories && (
 						<div className={'flex flex-wrap gap-2 gap-y-1 items-center'}>
-							<span>categories: </span>
+							{/*<span>categories: </span>*/}
 							{categories?.map(category => {
 								if (category !== null) {
 									const {_id: id, slug: {current: slug}, displayName, title} = category;
@@ -36,7 +36,7 @@ const PortfolioItem = ({slug, title, description, imageSrc, externalLink, catego
 					)}
 					{tools && (
 						<div className={'flex flex-wrap gap-2 gap-y-1 items-center'}>
-							<span>tools: </span>
+							{/*<span>tools: </span>*/}
 							{tools?.map(tool => {
 								if (tool !== null) {
 									const {_id: id, slug: {current: slug}, displayName, title} = tool;

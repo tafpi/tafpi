@@ -3,6 +3,7 @@ import TaxTag from "@/components/TaxTag";
 import Image from "next/image";
 import Layout from "@/components/Layout";
 
+// @todo pagination
 const PortfolioItem = ({item}) => {
 	if (!item) return null;
 	const {
