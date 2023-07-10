@@ -1,6 +1,7 @@
 import {client} from "@/lib/data";
 import Layout from "@/components/Layout";
 import Archive from "@/components/Archive";
+import Head from "next/head";
 
 export const getStaticPaths = async () => {
 	const tools = await client.fetch(`*[_type=='tool']{slug{current}}`);
@@ -40,17 +41,27 @@ export const getStaticProps = async (ctx) => {
 const Tool = ({tool, allTools, portfolioItems}) => {
 	if (!tool || !portfolioItems) return null;
 	const {title, displayName} = tool;
+	const workingTitle = displayName ?? title;
 	return (
-		<Layout>
-			<Archive
-				slug={tool.slug.current}
-				type={'Tool'}
-				path={'tool'}
-				title={displayName ?? title}
-				tags={allTools}
-				items={portfolioItems}
-			/>
-		</Layout>
+		<>
+			<Head>
+				<title>TP - {workingTitle} Tool</title>
+				<meta name="description"
+							content={`This is a page listing projects that use ${workingTitle}.`}/>
+				<meta name="viewport" content="width=device-width, initial-scale=1"/>
+				{/*<link rel="icon" href="/favicon.ico"/>*/}
+			</Head>
+			<Layout>
+				<Archive
+					slug={tool.slug.current}
+					type={'Tool'}
+					path={'tool'}
+					title={workingTitle}
+					tags={allTools}
+					items={portfolioItems}
+				/>
+			</Layout>
+		</>
 	);
 };
 

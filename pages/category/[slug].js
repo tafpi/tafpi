@@ -1,6 +1,7 @@
 import {client} from "@/lib/data";
 import Layout from "@/components/Layout";
 import Archive from "@/components/Archive";
+import Head from "next/head";
 
 export const getStaticPaths = async () => {
 	const categories = await client.fetch(`*[_type=='category']{slug{current}}`);
@@ -39,17 +40,26 @@ export const getStaticProps = async (ctx) => {
 const Category = ({category, allCategories, portfolioItems}) => {
 	if (!category || !portfolioItems) return null;
 	const {title, displayName} = category;
+	const workingTitle = displayName ?? title;
 	return (
-		<Layout>
-			<Archive
-				slug={category.slug.current}
-				type={'Category'}
-				path={'category'}
-				title={displayName ?? title}
-				tags={allCategories}
-				items={portfolioItems}
-			/>
-		</Layout>
+		<>
+			<Head>
+				<title>TP - {workingTitle} Category</title>
+				<meta name="description" content={`This is a page listing projects within the ${workingTitle} category.`}/>
+				<meta name="viewport" content="width=device-width, initial-scale=1"/>
+				{/*<link rel="icon" href="/favicon.ico"/>*/}
+			</Head>
+			<Layout>
+				<Archive
+					slug={category.slug.current}
+					type={'Category'}
+					path={'category'}
+					title={workingTitle}
+					tags={allCategories}
+					items={portfolioItems}
+				/>
+			</Layout>
+		</>
 	);
 };
 
